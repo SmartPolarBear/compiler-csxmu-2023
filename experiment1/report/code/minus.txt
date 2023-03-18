@@ -1,0 +1,9 @@
+.data
+N: .word 5
+.text
+main:
+ADDIU $r1, $r0, A
+LW $r2, 0($r1)
+ADDIU $r2, $r2, -1
+SW $r2,0($r1)
+SLL $r0,$r0,0

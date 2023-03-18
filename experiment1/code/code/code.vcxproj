@@ -132,8 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="code.cpp" />
-    <ClCompile Include="parser.ixx" />
-    <ClCompile Include="scanner.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

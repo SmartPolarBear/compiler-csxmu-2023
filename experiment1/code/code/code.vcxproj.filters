@@ -18,11 +18,5 @@
     <ClCompile Include="code.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scanner.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="parser.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

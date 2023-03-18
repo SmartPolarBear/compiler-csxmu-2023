@@ -1,0 +1,276 @@
+\documentclass[a4paper,twoside]{article}
+\usepackage{blindtext}  
+\usepackage{geometry}
+
+% Chinese support
+\usepackage[UTF8, scheme = plain]{ctex}
+
+% Page margin layout
+\geometry{left=2.3cm,right=2cm,top=2.5cm,bottom=2.0cm}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{hyperref}
+
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{float}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{longtable}
+\usepackage{tikz}
+\usepackage{multicol}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+\usepackage{color,xcolor}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{minted}
+
+
+\usepackage{indentfirst}
+\setlength{\parindent}{2em} % Make two letter space in the first paragraph
+\usepackage{setspace}
+\linespread{1.5} % Line spacing setting
+\usepackage{siunitx}
+\setlength{\parskip}{0.5em} % Paragraph spacing setting
+
+% \usepackage[contents =22920202204622, scale = 10, color = black, angle = 50, opacity = .10]{background}
+
+\renewcommand{\figurename}{图}
+\renewcommand{\listingscaption}{代码}
+\renewcommand{\tablename}{表格}
+\renewcommand{\contentsname}{目录}
+\floatname{algorithm}{算法}
+
+\graphicspath{ {images/} }
+
+%%%%%%%%%%%%%
+\newcommand{\StudentNumber}{22920202204622}  % Fill your student number here
+\newcommand{\StudentName}{熊恪峥}  % Replace your name here
+\newcommand{\PaperTitle}{实验（一）表达式翻译器}  % Change your paper title here
+\newcommand{\PaperType}{编译原理} % Replace the type of your report here
+\newcommand{\Date}{2023年3月17日}
+\newcommand{\College}{信息学院}
+\newcommand{\CourseName}{编译原理}
+%%%%%%%%%%%%%
+
+%% Page header and footer setting
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+% This requires the document to be twoside
+\fancyhead[LO]{\texttt{\StudentName }}
+\fancyhead[LE]{\texttt{\StudentNumber}}
+\fancyhead[C]{\texttt{\PaperTitle }}
+\fancyhead[R]{\texttt{第{\thepage}页，共\pageref*{LastPage}页}}
+
+
+\title{\PaperTitle}
+\author{\StudentName}
+\date{\Date}
+
+\algnewcommand\algorithmicinput{\textbf{Input:}}
+\algnewcommand\algorithmicoutput{\textbf{Output:}}
+\algnewcommand\Input{\item[\algorithmicinput]}%
+\algnewcommand\Output{\item[\algorithmicoutput]}%
+
+\usetikzlibrary{positioning, shapes.geometric}
+
+\begin{document}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter % change default title style
+\renewcommand*\maketitle{%
+	\begin{center} 
+		\bfseries  % title 
+		{\LARGE \@title \par}  % LARGE typesetting
+		\vskip 1em  %  margin 1em
+		{\global\let\author\@empty}  % no author information
+		{\global\let\date\@empty}  % no date
+		\thispagestyle{empty}   %  empty page style
+	\end{center}%
+	\setcounter{footnote}{0}%
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+\thispagestyle{empty}
+
+\vspace*{1cm}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=4.0cm]{logo.png}
+\end{figure}
+
+\vspace*{1cm}
+
+\begin{center}
+	\Huge{\textbf{\PaperType}}
+	
+	\Large{\PaperTitle}
+\end{center}
+
+\vspace*{1cm}
+
+\begin{table}[H]
+	\centering	
+	\begin{Large}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{p{3cm} p{5cm}<{\centering}}
+			姓\qquad 名 & \StudentName  \\
+			\hline
+			学\qquad号 & \StudentNumber \\
+			\hline
+			日\qquad期 & \Date  \\
+			\hline
+			学\qquad院 & \College  \\
+			\hline
+			课程名称 & \CourseName  \\
+			\hline
+		\end{tabular}
+	\end{Large}
+\end{table}
+
+\newpage
+
+\title{
+	\Large{\textcolor{black}{\PaperTitle}}
+}
+	
+	
+\maketitle
+	
+\tableofcontents
+ 
+\newpage
+\setcounter{page}{1}
+
+\begin{spacing}{1.2}
+
+\section{选题}
+
+在程序pInOrderToPost3.cpp的基础上，完成“二、 实验内容”中的要求。 
+
+\section{实验目的}
+
+构造一个中缀表达式到后缀表达式的翻译器，初步了解递归下降语法分析原理及语法制导翻译的过程。
+
+\section{实现思路}
+
+首先，为了支持变量、乘除法和括号，我们需要对文法进行修改，如公式\eqref{eqn:grammar}。其中，\texttt{print}函数用于输出后缀表达式，\texttt{identifer}表示变量名。
+\begin{equation}
+\label{eqn:grammar}
+\begin{aligned}
+expr \rightarrow & expr + term \ \{\mathop{print}('+')\} \\
+ &| expr - term \ \{\mathop{print}('-')\} \\
+ &| term \\
+term \rightarrow & term * factor \ \{\mathop{print}('*')\} \\
+ &| term / factor \ \{\mathop{print}('/')\} \\
+ &| factor \\
+factor \rightarrow & ( expr ) | item \\
+item \rightarrow & 0  \ \{\mathop{print}('0')\} \\
+ &| 1  \ \{\mathop{print}('1')\} \\
+ &| \dots \\
+ &| 9  \ \{\mathop{print}('9')\} \\
+ &| identifer \ \{\mathop{print}(lexeme)\}
+\end{aligned}
+\end{equation}
+其中，\texttt{identifer}的定义如\eqref{eqn:ident}。
+\begin{equation}
+\label{eqn:ident}
+\begin{aligned}
+identifer := & [a-zA-Z] [a-zA-Z0-9]*
+\end{aligned}
+\end{equation}
+然后使用“语法制导定义”方法进行实现。
+
+\section{问题1、如何使词法分析和语法分析的实现在形式上独立？}
+
+为了在满足“按需词法分析”的要求下，使词法分析和语法分析的实现在形式上独立，我使用了C++的协程（coroutine）技术
+\footnote[1]{编译使用C++协程的程序需要编译器支持C++20，需要使用VS2019以上的版本}。
+协程是一种程序组织方式，它允许程序在执行过程中暂停，然后在稍后的某个时间点恢复执行。
+节选的一段代码如代码~\ref*{code:coroutine}。当使用\texttt{co\_yield}时，程序会保留状态暂停执行，并返回指定的值。
+
+程序返回的\texttt{generator<token>}对象可以被视为一个迭代器，可以使用\texttt{for}循环遍历。遍历时每当自增迭代器时，
+程序会从上次暂停并返回的位置之后恢复执行，直到遇到下一个\texttt{co\_yield}语句暂停执行，
+或者遇到\texttt{co\_return}结束执行。
+
+因此，在调用\texttt{scan}函数时，虽然会立即返回，但是在遍历返回的\texttt{generator<token>}对象时真正的求值才会发生。
+借助这一特性，可以在代码形式上使得词法分析和语法分析的实现独立。然而在执行逻辑上，词法分析仍是由语法分析驱动的。这样实现
+能够在满足模块间“高内聚、低耦合”的要求下，依然保持了如同pInOrderToPost3.cpp中一样的执行逻辑。
+
+\begin{listing}[htb]
+	\caption{使用协程实现词法分析}
+	\label{code:coroutine}
+	\begin{minted}{c++}
+std::experimental::generator<token> scan(std::string code)
+{
+	auto it = code.begin();
+	while (it != code.end())
+	{
+		if (*it == ' ' || *it == '\t' || *it == '\n' || *it == '\r')
+		{
+			++it;
+		}
+		else if (std::isdigit(*it))
+		{
+			auto peek = it;
+			while (std::isdigit(*peek))
+			{
+				++peek;
+			}
+			token t{};
+			t.type = token_type::NUM;
+			t.lexeme = std::string(it, peek);
+			it = peek;
+			co_yield t;
+		}
+		...
+		else
+		{
+			throw std::runtime_error("Invalid token");
+		}
+	}
+	co_return;
+}
+	\end{minted}
+\end{listing}
+
+\section{问题2、这样实现符合“语法制导翻译方案”吗？}
+
+是的。
+
+根据问题1的解释，当调用函数\texttt{scan}时，实际上的词法分析并没有发生。在语法分析的过程中，当需要一个token时，在调用
+所返回的\texttt{generator}的迭代器的\texttt{operator++}函数时，才会发生一次求值，进而获取下一个\texttt{token}。
+因此，虽然在代码的形式上类似于“进行完整的词法分析并返回了所有token”，
+但实际上只是在语法分析的过程中进行了“按需词法分析”，得到一个token。符合
+“语法制导翻译方案”。因为在执行逻辑上，词法分析仍是由语法分析驱动的。
+
+
+
+\end{spacing}
+
+\end{document}
