@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	for (const auto &t: tokens)
 	{
-		cout << std::format("  Type: {}, Lexeme: {}, Line: {}\n", int(t.type), t.lexeme, t.line);
+		cout << std::format("  Type: {}, Lexeme: {}, Line: {}\n", token_type_name(t.type), t.lexeme, t.line);
 	}
 
 	return 0;
