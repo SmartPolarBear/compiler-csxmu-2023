@@ -2,19 +2,22 @@ CC=gcc
 CPP=g++
 LEX=flex
 
+CXXFLAGS = -std=c++2b -g
+CFLAGS = -g
+
 all: scanner
 
 clean:
 	rm -f *.o lex.yy.c scanner
 
 lex.yy.c: lex.l
-	$(LEX) $< -o $@
+	$(LEX) -o $@ $<
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.cc
-	$(CPP) -c $< -o $@
+	$(CPP) $(CXXFLAGS) -c $< -o $@
 
 scanner: main.o lexer.o lex.yy.o
 	$(CPP) $^ -o $@
