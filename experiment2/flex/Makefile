@@ -7,8 +7,8 @@ all: scanner
 clean:
 	rm -f *.o lex.yy.c scanner
 
-lex.yy.c: lexer.l lexer.h lexer.c
-	$(LEX) lexer.l
+lex.yy.c: lex.l
+	$(LEX) $< -o $@
 
 %.o: %.c
 	$(CC) -c $< -o $@

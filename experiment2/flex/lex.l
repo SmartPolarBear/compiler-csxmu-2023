@@ -93,20 +93,6 @@ float     { printf("BASIC:%s\n",yytext); return (BASIC_TKN); }
 
 %%
 
-/*该函数设置yyin变量，fflex对yyin变量所对应的文件进行词法分析*/
-void BeginCompileOneFile( const char * filename )
-{
-   yyin = fopen( filename, "r");
-   fseek( yyin, 0, SEEK_SET );
-
-}
-
-void EndCompileOneFile(void)
-{
-   fclose(yyin);
-   yyin = 0;
-}
-
 int yywrap()/*多文件*/
 {
     return 1;
