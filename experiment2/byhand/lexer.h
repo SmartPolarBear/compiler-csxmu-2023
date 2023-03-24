@@ -31,6 +31,7 @@ private:
 		{"void", token_type::VOID}
 	};
 
+	void add_token(token_type t, const literal_type &lit);
 	void add_token(token_type t);
 
 	void scan_string();

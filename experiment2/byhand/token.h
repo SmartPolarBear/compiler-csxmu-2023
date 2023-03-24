@@ -5,6 +5,9 @@
 #pragma once
 
 #include <string>
+#include <optional>
+#include <variant>
+#include <format>
 
 // token type enum as defined in the dragon book
 enum class token_type
@@ -126,9 +129,22 @@ static inline constexpr std::string token_type_name(token_type t)
 	return "UNKNOWN";
 }
 
+using literal_type = std::optional<std::variant<int, double, std::string>>;
+
 struct token
 {
 	token_type type;
 	std::string lexeme;
 	int line;
+	literal_type literal;
+};
+
+struct literal_printer
+{
+	std::string operator()(int i) const
+	{ return std::format("[Integer type, literal: {}]", std::to_string(i)); }
+	std::string operator()(double d) const
+	{ return std::format("[Floating type, literal: {}]", std::to_string(d)); }
+	std::string operator()(std::string s) const
+	{ return std::format("[String type, literal: {}]", s); }
 };

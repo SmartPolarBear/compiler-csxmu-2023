@@ -159,7 +159,8 @@ void scanner::scan_string()
 
 	advance(); // eat the closing "
 
-	add_token(token_type::STRING);
+	auto lexeme = whole_lexeme();
+	add_token(token_type::STRING, lexeme.substr(1, lexeme.size() - 2));
 }
 
 void scanner::scan_number_literal()
@@ -176,7 +177,14 @@ void scanner::scan_number_literal()
 			advance();
 	}
 
-	add_token(token_type::NUM);
+	if (floating)
+	{
+		add_token(token_type::NUM, stod(whole_lexeme()));
+	}
+	else
+	{
+		add_token(token_type::NUM, stoi(whole_lexeme()));
+	}
 }
 
 void scanner::scan_identifier()
@@ -234,4 +242,9 @@ void scanner::consume_line_comment()
 void scanner::add_token(token_type t)
 {
 	tokens_.emplace_back(t, whole_lexeme(), line_);
+}
+
+void scanner::add_token(token_type t, const literal_type &lit)
+{
+	tokens_.emplace_back(t, whole_lexeme(), line_, lit);
 }

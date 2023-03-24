@@ -8,8 +8,6 @@
 
 using namespace std;
 
-
-
 int main(int argc, char *argv[])
 {
 	ifstream src{argv[1]};
@@ -24,7 +22,16 @@ int main(int argc, char *argv[])
 
 	for (const auto &t: tokens)
 	{
-		cout << std::format("  Type: {}, Lexeme: {}, Line: {}\n", token_type_name(t.type), t.lexeme, t.line);
+		cout << std::format("  Type: {}, Lexeme: {}, Line: {}", token_type_name(t.type), t.lexeme, t.line);
+		if (t.literal.has_value())
+		{
+			literal_printer pr{};
+			cout << std::format(", Value: {}\n", std::visit(pr, t.literal.value()));
+		}
+		else
+		{
+			cout << "\n";
+		}
 	}
 
 	return 0;
