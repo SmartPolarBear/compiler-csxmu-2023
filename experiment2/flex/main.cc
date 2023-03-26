@@ -11,9 +11,21 @@ int main(int argc, char **argv)
 	fseek(yyin, 0, SEEK_SET);
 
 	int token = 0;
+	literal_printer pt;
 	while ((token = yylex()) != 0)
 	{
-		cout << "Token " << yylval->type << " : " << yylval->lexeme << endl;
+		cout << "Token " << yylval->type
+			 << " in line " << yylval->line
+			 << ": " << yylval->lexeme;
+
+		if (yylval->literal.has_value())
+		{
+			cout << ", Value" << std::visit(pt, yylval->literal.value()) << endl;
+		}
+		else
+		{
+			cout << endl;
+		}
 	}
 
 	fclose(yyin);

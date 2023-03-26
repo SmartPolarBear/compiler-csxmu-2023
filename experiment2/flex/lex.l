@@ -22,7 +22,7 @@ ws       {delim}+
 letter   [A-Za-z]
 digit    [0-9]
 id       {letter}({letter}|{digit})*
-number   {digit}+(\.{digit}+)?(E[+-]?{digit}+)?
+number   {digit}+(\.{digit}+)?(E[+-]?{digit}+)?(f|lf|sz)?
 eoc      \*\/
 
 %x COMMENT
@@ -77,6 +77,7 @@ float      { EMIT_TOKEN(TK_FLOAT); }
 "/"        { EMIT_TOKEN(TK_DIVIDE); }
 "<"        { EMIT_TOKEN(TK_LT); }
 "<="       { EMIT_TOKEN(TK_LTE); }
+"=="       { EMIT_TOKEN(TK_ASSIGN); }
 "="        { EMIT_TOKEN(TK_EQ); }
 "!="       { EMIT_TOKEN(TK_NEQ); }
 ">"        { EMIT_TOKEN(TK_GT); }

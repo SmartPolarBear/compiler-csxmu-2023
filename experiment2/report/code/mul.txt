@@ -1,0 +1,15 @@
+.data
+X: .word 5
+Y: .word 3
+.text
+main:
+ADDIU $r1, $r0, X
+LW $r2, 0($r1)
+ADDIU $r1, $r0, Y
+LW $r3, 0($r1)
+SUB $r4,$r2,$r3
+ADD $r5,$r2,$r3
+SLL $r4,$r4,1
+SRL $r5,$r5,3
+SUB $r6,$r4,$r5
+SLL $r0,$r0,0
