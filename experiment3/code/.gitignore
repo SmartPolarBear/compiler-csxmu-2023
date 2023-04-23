@@ -1,0 +1,4 @@
+*.yy.c
+*.o
+test/*
+scanner
