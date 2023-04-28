@@ -1,0 +1,4 @@
+bool → expr relop expr | expr
+expr → expr + term | expr - term | term
+term → term * factor | term / factor | factor
+factor → ( expr ) | id | num

@@ -1,0 +1,70 @@
+program-> block
+block->{ stmts }
+stmts-> stmt stmts
+stmt->assign_stmt
+bool->expr
+expr->term
+term->factor
+factor->num
+stmts-> stmt stmts
+stmt->assign_stmt
+bool->expr
+expr->term
+term->factor
+factor->num
+stmts-> stmt stmts
+stmt->while(expr)stmt
+bool->expr
+expr->term
+term->factor
+factor->id
+bool->expr
+expr->term
+term->factor
+factor->num
+bool->expr<=expr
+stmt->block
+block->{ stmts }
+stmts-> stmt stmts
+stmt->assign_stmt
+bool->expr
+expr->term
+term->factor
+factor->id
+bool->expr
+expr->term
+term->factor
+factor->id
+bool->expr
+expr->expr+term
+stmts-> stmt stmts
+stmt->assign_stmt
+bool->expr
+expr->term
+term->factor
+factor->id
+bool->expr
+expr->term
+term->factor
+factor->num
+bool->expr
+expr->expr+term
+stmts-> stmt stmts
+stmt->if(expr)stmt
+bool->expr
+expr->term
+term->factor
+factor->id
+bool->expr
+expr->term
+term->factor
+factor->num
+bool->expr
+expr->term
+term->term/factor
+bool->expr
+expr->term
+term->factor
+factor->num
+bool->expr==expr
+stmt->break;

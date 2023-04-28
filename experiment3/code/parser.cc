@@ -53,9 +53,9 @@ void parser::block()
 
 void parser::stmts()
 {
-	cout << "stmts-> stmt stmts" << endl;
 	while (!is_end())
 	{
+		cout << "stmts-> stmt stmts" << endl;
 		stmt();
 		if (peek()->type == token_type::TK_RBRACE)
 		{
@@ -166,11 +166,11 @@ int parser::unary()
 
 	if (op->type == TK_ID)
 	{
-		cout << "bool->expr\nexpr->term\nterm->factor\nfactor->unary_op id\n";
+		cout << "bool->expr\nexpr->term\nterm->factor\nfactor->id\n";
 	}
 	else if (op->type == TK_NUM)
 	{
-		cout << "bool->expr\nexpr->term\nterm->factor\nfactor->unary_op num\n";
+		cout << "bool->expr\nexpr->term\nterm->factor\nfactor->num\n";
 	}
 	return 0;
 }
