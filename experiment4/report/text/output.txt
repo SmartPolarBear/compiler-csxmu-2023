@@ -1,0 +1,28 @@
+factor-->num
+unary-->factor
+term-->unary
+expr-->term
+rel-->expr
+equality-->rel
+join-->equality
+bool-->join
+stmt-->id=bool;
+stmts-->stmts stmt
+factor-->id
+unary-->factor
+term-->unary
+expr-->term
+factor-->num
+unary-->factor
+term-->unary
+expr-->term
+rel-->expr<=expr
+equality-->rel
+join-->equality
+bool-->join
+block-->{decls stmts}
+stmt-->block
+stmt-->while(bool)stmt
+stmts-->stmts stmt
+block-->{decls stmts}
+program-->block

@@ -1,0 +1,16 @@
+term : term '*' unary { printf("term-->term*unary\n"); }
+     | term '/' unary { printf("term-->term/unary\n"); }
+     | unary { printf("term-->unary\n"); }
+     ;
+unary : '!' unary { printf("unary-->!unary\n"); }
+      | '-' unary %prec UMINUS{ printf("unary-->-unary\n"); }
+      | factor { printf("unary-->factor\n"); }
+      ;
+factor : '(' bool ')' { printf("factor-->(bool)\n"); }
+       | ID { printf("factor-->id\n"); }
+       | NUM { printf("factor-->num\n"); }
+       | REAL { printf("factor-->real\n"); }
+       | TRUE { printf("factor-->true\n"); }
+       | FALSE { printf("factor-->false\n"); }
+       ;
+       
